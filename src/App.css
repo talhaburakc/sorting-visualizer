@@ -3,8 +3,36 @@
   min-height: 100vh;
 }
 
+.bar {
+  display: inline-block;
+  color: white;
+  width: 20px;
+  margin-right: 3px;
+}
+
+.bar-wrapper {
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 .slider {
   width: 80% !important;
   display: block !important;
   margin: auto;
+  margin-top: 20px;
+}
+
+.buttons-wrapper {
+  display: block;
+  text-align: center;
+}
+
+.button {
+  display: inline-block !important;
+  margin: auto !important;
+  background-color: #3f51b5 !important;
+  color: white !important;
+  margin: 10px !important;
 }
