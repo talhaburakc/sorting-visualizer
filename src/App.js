@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Styles from './Styles';
 
 const defaultSize = 40;
-const defaultSpeed = 50;
+const defaultSpeed = 90;
 const maxSize = 100;
 const maxSpeed = 100;
 const styles = Styles;
