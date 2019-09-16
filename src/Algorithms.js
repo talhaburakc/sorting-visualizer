@@ -100,6 +100,60 @@ export default class Algorithms {
   static quickSort(arr, sortHistory, highlightHistory) {
     this.clearArray(sortHistory);
     this.clearArray(highlightHistory);
+    this.quickSortIterative(arr, 0, arr.length - 1, sortHistory, highlightHistory);
+  }
+
+  static quickSortIterative(arr, l, h, sortHistory, highlightHistory) { 
+    // Create an auxiliary stack 
+    let stack = []; 
+  
+    // initialize top of stack 
+    let top = -1; 
+  
+    // push initial values of l and h to stack 
+    stack[++top] = l; 
+    stack[++top] = h; 
+  
+    // Keep popping from stack while is not empty 
+    while (top >= 0) { 
+        // Pop h and l 
+        h = stack[top--]; 
+        l = stack[top--]; 
+  
+        // Set pivot element at its correct position 
+        // in sorted array 
+        let p = this.partition(arr, l, h, sortHistory, highlightHistory); 
+  
+        // If there are elements on left side of pivot, 
+        // then push left side to stack 
+        if (p - 1 > l) { 
+            stack[++top] = l; 
+            stack[++top] = p - 1; 
+        } 
+  
+        // If there are elements on right side of pivot, 
+        // then push right side to stack 
+        if (p + 1 < h) { 
+            stack[++top] = p + 1; 
+            stack[++top] = h; 
+        } 
+    } 
+  } 
+
+  static partition(arr, l, h, sortHistory, highlightHistory) { 
+    let x = arr[h]; 
+    let i = (l - 1); 
+  
+    for (let j = l; j <= h - 1; j++) { 
+      sortHistory.push(arr.slice());
+      highlightHistory.push([j, l, h]);
+      if (arr[j] <= x) { 
+          i++; 
+          this.swap(arr, i, j); 
+      } 
+    } 
+    this.swap(arr, i + 1, h); 
+    return (i + 1); 
   }
 
   static swap(arr, i, j) {
