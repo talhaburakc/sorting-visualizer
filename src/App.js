@@ -9,9 +9,9 @@ import Styles from './Styles';
 import Algorithms from './Algorithms.js';
 
 const defaultSize = 40;
-const defaultSpeed = 90;
-const maxSize = 100;
-const maxSpeed = 100;
+const defaultSpeed = 150;
+const maxSize = 200;
+const maxSpeed = 200;
 const highlightColors = ['red', 'green', 'yellow', 'gray'];
 const styles = Styles;
 
@@ -53,17 +53,28 @@ class App extends Component {
   }
 
   sortAsChosen(arr, sortHistory, highlightHistory) {
-    console.log(this.props.location.pathname);
     let path = this.props.location.pathname;
     switch (path) {
       case '/bubble-sort':
-          Algorithms.bubbleSort(this.state.arr.slice(), this.sortHistory, this.highlightHistory);
+          Algorithms.bubbleSort(arr.slice(), sortHistory, highlightHistory);
           break;
       case '/insertion-sort':
-          Algorithms.insertionSort(this.state.arr.slice(), this.sortHistory, this.highlightHistory);
+          Algorithms.insertionSort(arr.slice(), sortHistory, highlightHistory);
           break;
+      case '/selection-sort':
+        Algorithms.selectionSort(arr.slice(), sortHistory, highlightHistory);
+        break;
+      case '/selection-sort':
+        Algorithms.selectionSort(arr.slice(), sortHistory, highlightHistory);
+        break;
+      case '/merge-sort':
+        Algorithms.mergeSort(arr.slice(), sortHistory, highlightHistory);
+        break;
+      case '/quick-sort':
+        Algorithms.quickSort(arr.slice(), sortHistory, highlightHistory);
+        break;                
       default:
-          Algorithms.bubbleSort(this.state.arr.slice(), this.sortHistory, this.highlightHistory);
+          Algorithms.bubbleSort(arr.slice(), sortHistory, highlightHistory);
     }
   }
 
@@ -186,14 +197,25 @@ function Header(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}}>
-            <Button color="inherit" onClick={() => props.history.push('bubble-sort')}>BUBBLE SORT</Button>
-            <Button color="inherit" onClick={() => props.history.push('insertion-sort')}>INSERTION SORT</Button>
+            <HeaderButtons history={props.history}/>
           </Typography>
           <IconButton edge="start" style={{marginRight: 10 + 'px'}} color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
+    </div>
+  );
+}
+
+function HeaderButtons(props) {
+  return (
+    <div>
+      <Button color="inherit" onClick={() => props.history.push('bubble-sort')}>BUBBLE SORT</Button>
+      <Button color="inherit" onClick={() => props.history.push('insertion-sort')}>INSERTION SORT</Button>
+      <Button color="inherit" onClick={() => props.history.push('selection-sort')}>SELECTION SORT</Button>
+      <Button color="inherit" onClick={() => props.history.push('merge-sort')}>MERGE SORT</Button>
+      <Button color="inherit" onClick={() => props.history.push('quick-sort')}>QUICK SORT</Button>
     </div>
   );
 }
