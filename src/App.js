@@ -47,21 +47,24 @@ class App extends Component {
 
   sort() {
     if (this.interval) return;
-    let arr = this.state.arr.slice();    
-    this.sortHistory = [arr.slice()];
-    this.highlightHistory = [0];
-    console.log('SORT');
-    for (let i = 0; i < arr.length - 1; i++) {
-      for (let j = 0; j < arr.length - (i + 1); j++) {
-        if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-          this.sortHistory.push(arr.slice());
-          this.highlightHistory.push(j + 1);
+    if (this.sortHistory.length !== 0 && this.sortHistoryTraverseIndex === this.sortHistory.length) return;
+    if (this.sortHistoryTraverseIndex === 0) {
+      let arr = this.state.arr.slice();    
+      this.sortHistory = [arr.slice()];
+      this.highlightHistory = [0];
+      console.log('SORT');
+      for (let i = 0; i < arr.length - 1; i++) {
+        for (let j = 0; j < arr.length - (i + 1); j++) {
+          if (arr[j] > arr[j + 1]) {
+            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+            this.sortHistory.push(arr.slice());
+            this.highlightHistory.push(j + 1);
+          }
         }
       }
-    }
-    this.sortHistoryTraverseIndex = 0;
-    if (this.sortHistory.length === 1) return;
+      this.sortHistoryTraverseIndex = 0;
+      if (this.sortHistory.length === 1) return;
+    }  
     this.setState({sortOnGoing: true});
     if (this.interval) {
       clearInterval(this.interval);
@@ -87,6 +90,9 @@ class App extends Component {
 
   handleSizeSlide(event, newValue) {
     let arr = this.state.arr;
+    this.sortHistoryTraverseIndex = 0;
+    this.sortHistory = [];
+    this.highlightHistory = [];
     if (newValue > arr.length) {
       for (let i = 0; i < newValue - arr.length; i++) {
         arr.push(Math.floor( Math.random() * 50) + 1);
@@ -123,7 +129,7 @@ class App extends Component {
         <Header />
         <div className="top-slider-wrapper">
           <span className="slider-label">Size</span>
-          <Slider className={classes.topSlider} defaultValue={defaultSize} min={0} max={maxSize} onChange={this.handleSizeSlide.bind(this)} aria-labelledby="discrete-slider" />
+          <Slider disabled={this.sortHistoryTraverseIndex > 0 && this.sortHistoryTraverseIndex < this.sortHistory.length - 1} className={classes.topSlider} defaultValue={defaultSize} min={0} max={maxSize} onChange={this.handleSizeSlide.bind(this)} aria-labelledby="discrete-slider" />
         </div>
         <div className="top-slider-wrapper">
           <span className="slider-label">Speed</span>
