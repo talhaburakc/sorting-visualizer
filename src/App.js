@@ -5,6 +5,7 @@ import './App.css';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import Styles from './Styles';
+import Algorithms from './Algorithms.js';
 
 const defaultSize = 40;
 const defaultSpeed = 90;
@@ -42,26 +43,16 @@ class App extends Component {
     for (let i = 0; i < this.sortSize; i++) {
       arr.push(Math.floor( Math.random() * 50) + 1);
     }
-    this.setState({arr: arr, highlighted: 0});
+    this.setState({arr: arr, highlighted: -1});
   }
 
   sort() {
     if (this.interval) return;
     if (this.sortHistory.length !== 0 && this.sortHistoryTraverseIndex === this.sortHistory.length) return;
     if (this.sortHistoryTraverseIndex === 0) {
-      let arr = this.state.arr.slice();    
-      this.sortHistory = [arr.slice()];
-      this.highlightHistory = [0];
       console.log('SORT');
-      for (let i = 0; i < arr.length - 1; i++) {
-        for (let j = 0; j < arr.length - (i + 1); j++) {
-          if (arr[j] > arr[j + 1]) {
-            [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-            this.sortHistory.push(arr.slice());
-            this.highlightHistory.push(j + 1);
-          }
-        }
-      }
+      Algorithms.bubbleSort(this.state.arr.slice(), this.sortHistory, this.highlightHistory);
+
       this.sortHistoryTraverseIndex = 0;
       if (this.sortHistory.length === 1) return;
     }  
