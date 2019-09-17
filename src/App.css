@@ -3,6 +3,14 @@
   min-height: 100vh;
 }
 
+.sort-name {
+  margin-top: 10px;
+  color: white;
+  display: block;
+  text-align: center;
+  font-style: italic;
+}
+
 .top-slider-wrapper {
   display: flex;
   justify-content: center;

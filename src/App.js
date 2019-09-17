@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { AppBar, Button, Toolbar, Typography, IconButton, Slider } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import MenuIcon from '@material-ui/icons/Menu';
+import { Button, Slider } from '@material-ui/core';
 import './App.css';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import Styles from './Styles';
 import Algorithms from './Algorithms.js';
+import Header from './components/Header';
 
 const defaultSize = 40;
 const defaultSpeed = 150;
@@ -21,7 +20,8 @@ class App extends Component {
     this.state = {
       arr: [],
       highlighted: [],
-      sortOnGoing: false
+      sortOnGoing: false,
+      sortName: 'Bubble Sort'
     };
     this.sortHistory = [];
     this.highlightHistory = [];
@@ -32,6 +32,26 @@ class App extends Component {
     console.log(this.props);
     this.props.history.listen((location, action) => {
       this.generateNewArray();
+      let path = location.pathname;
+      switch (path) {
+        case '/bubble-sort':
+            this.setState({sortName: 'Bubble Sort'});
+            break;
+        case '/insertion-sort':
+            this.setState({sortName: 'Insertion Sort'});
+            break;
+        case '/selection-sort':
+          this.setState({sortName: 'Selection Sort'});
+          break;
+        case '/merge-sort':
+          this.setState({sortName: 'Merge Sort'});
+          break;
+        case '/quick-sort':
+          this.setState({sortName: 'Quick Sort'});
+          break;                
+        default:
+            this.setState({sortName: 'Bubble Sort'});
+      }
     });
   }
 
@@ -61,9 +81,6 @@ class App extends Component {
       case '/insertion-sort':
           Algorithms.insertionSort(arr.slice(), sortHistory, highlightHistory);
           break;
-      case '/selection-sort':
-        Algorithms.selectionSort(arr.slice(), sortHistory, highlightHistory);
-        break;
       case '/selection-sort':
         Algorithms.selectionSort(arr.slice(), sortHistory, highlightHistory);
         break;
@@ -158,6 +175,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header history={this.props.history} />
+        <span className="sort-name"> {this.state.sortName} </span>
         <div className="top-slider-wrapper">
           <span className="slider-label">Size</span>
           <Slider disabled={this.sortHistoryTraverseIndex > 0 && this.sortHistoryTraverseIndex < this.sortHistory.length - 1} className={classes.topSlider} defaultValue={defaultSize} min={0} max={maxSize} onChange={this.handleSizeSlide.bind(this)} aria-labelledby="discrete-slider" />
@@ -187,35 +205,6 @@ App.propTypes = {
 function Bar(props) {
   return (
     <div className='bar' style={{height: props.size * 10, backgroundColor: props.color}}>
-    </div>
-  );
-}
-
-function Header(props) {
-  return (
-    <div>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" style={{flexGrow: 1}}>
-            <HeaderButtons history={props.history}/>
-          </Typography>
-          <IconButton edge="start" style={{marginRight: 10 + 'px'}} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-}
-
-function HeaderButtons(props) {
-  return (
-    <div>
-      <Button color="inherit" onClick={() => props.history.push('bubble-sort')}>BUBBLE SORT</Button>
-      <Button color="inherit" onClick={() => props.history.push('insertion-sort')}>INSERTION SORT</Button>
-      <Button color="inherit" onClick={() => props.history.push('selection-sort')}>SELECTION SORT</Button>
-      <Button color="inherit" onClick={() => props.history.push('merge-sort')}>MERGE SORT</Button>
-      <Button color="inherit" onClick={() => props.history.push('quick-sort')}>QUICK SORT</Button>
     </div>
   );
 }
