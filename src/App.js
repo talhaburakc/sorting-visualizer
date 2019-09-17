@@ -60,7 +60,11 @@ class App extends Component {
   }
 
   generateNewArray() {
-    if (this.interval) return;
+    if (this.interval) {
+      clearInterval(this.interval);
+      this.interval = null;
+      this.setState({sortOnGoing: false});
+    }
     this.sortHistoryTraverseIndex = 0;
     this.sortHistory = [];
     this.highlightHistory = [];

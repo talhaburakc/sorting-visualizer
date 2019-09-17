@@ -11,8 +11,6 @@ export default class Algorithms {
         comparisonCount++;
         if (arr[j] > arr[j + 1]) {
           this.swap(arr, j, j + 1);
-          sortHistory.push(arr.slice());
-          highlightHistory.push([j + 1, j]);
         }
       }
     }
@@ -49,7 +47,7 @@ export default class Algorithms {
           min = j;
         }
         sortHistory.push(arr.slice());
-        highlightHistory.push([j, leftCol]);
+        highlightHistory.push([j, leftCol, min]);
       }
       if(i !== min) {
         this.swap(arr, i, min);
