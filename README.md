@@ -8,6 +8,6 @@ clone this repo
 ```
 cd sorting-visualizer
 npm install
-npm run-script dev
+npm run dev
 ```
 go to localhost:3000
